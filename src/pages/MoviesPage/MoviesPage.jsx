@@ -1,4 +1,3 @@
-// src/pages/MoviesPage/MoviesPage.jsx
 import { useState } from 'react';
 import axios from 'axios';
 import MovieList from '../../components/MovieList/MovieList';

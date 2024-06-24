@@ -11,15 +11,19 @@ const MovieDetailsPage = () => {
 
     useEffect(() => {
         const fetchMovieDetails = async () => {
-            const response = await axios.get(
-                `https://api.themoviedb.org/3/movie/${movieId}`,
-                {
-                    headers: {
-                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNWFiNDJhMWU2OTYwYjU3Nzk4Y2MyNzQ2MDc4NzBhZSIsIm5iZiI6MTcxOTIzMjYxMS41MTMyMTYsInN1YiI6IjY2Nzk1NTBlOTdkMDQ3YWNlNTNiM2Q4YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4FcuTbWlX50OpF_1lUuNLgA4otbdKEcUFMYapbb3jNI',
-                    },
-                }
-            );
-            setMovie(response.data);
+            try {
+                const response = await axios.get(
+                    `https://api.themoviedb.org/3/movie/${movieId}`,
+                    {
+                        headers: {
+                            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNWFiNDJhMWU2OTYwYjU3Nzk4Y2MyNzQ2MDc4NzBhZSIsIm5iZiI6MTcxOTIzMjYxMS41MTMyMTYsInN1YiI6IjY2Nzk1NTBlOTdkMDQ3YWNlNTNiM2Q4YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4FcuTbWlX50OpF_1lUuNLgA4otbdKEcUFMYapbb3jNI',
+                        },
+                    }
+                );
+                setMovie(response.data);
+            } catch (error) {
+                console.error('Error fetching movie details:', error);
+            }
         };
 
         fetchMovieDetails();
@@ -52,8 +56,8 @@ const MovieDetailsPage = () => {
             </div>
             <div className={styles.additionalInfo}>
                 <h2 className={styles.subtitle}>Additional Information</h2>
-                <Link to="cast" className={styles.additionalLink} state={{ from: location?.state?.from }}>Cast</Link>
-                <Link to="reviews" className={styles.additionalLink} state={{ from: location?.state?.from }}>Reviews</Link>
+                <Link to="cast" className={styles.additionalLink} state={{ from: location }}>Cast</Link>
+                <Link to="reviews" className={styles.additionalLink} state={{ from: location }}>Reviews</Link>
             </div>
             <Outlet />
         </div>
