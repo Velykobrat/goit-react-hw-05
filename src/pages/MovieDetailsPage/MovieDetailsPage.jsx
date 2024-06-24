@@ -1,4 +1,3 @@
-// src/pages/MovieDetailsPage/MovieDetailsPage.jsx
 import { useState, useEffect } from 'react';
 import { useParams, Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -53,8 +52,8 @@ const MovieDetailsPage = () => {
             </div>
             <div className={styles.additionalInfo}>
                 <h2 className={styles.subtitle}>Additional Information</h2>
-                <Link to="cast" className={styles.additionalLink}>Cast</Link>
-                <Link to="reviews" className={styles.additionalLink}>Reviews</Link>
+                <Link to="cast" className={styles.additionalLink} state={{ from: location?.state?.from }}>Cast</Link>
+                <Link to="reviews" className={styles.additionalLink} state={{ from: location?.state?.from }}>Reviews</Link>
             </div>
             <Outlet />
         </div>
