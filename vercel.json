@@ -2,15 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "src/index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/**/*",
-      "use": "@vercel/static"
+      "src": "src/index.js", 
+      "use": "@vercel/node" 
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/index.html" }
+    {
+      "src": "/api/movie/:movieId", 
+      "dest": "/src/pages/api/movie/[movieId].js" 
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/src/index.html" 
+    }
   ]
 }
