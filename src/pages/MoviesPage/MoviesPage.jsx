@@ -1,6 +1,8 @@
+// src/pages/MoviesPage/MoviesPage.jsx
 import { useState } from 'react';
 import axios from 'axios';
 import MovieList from '../../components/MovieList/MovieList';
+import styles from './MoviesPage.module.css';
 
 const MoviesPage = () => {
     const [query, setQuery] = useState('');
@@ -23,10 +25,12 @@ const MoviesPage = () => {
     };
 
     return (
-        <div>
-            <h1>Search Movies</h1>
-            <input type="text" value={query} onChange={handleInputChange} />
-            <button onClick={handleSearch}>Search</button>
+        <div className={styles.container}>
+            <h1 className={styles.title}>Search Movies</h1>
+            <div className={styles.searchBar}>
+                <input type="text" value={query} onChange={handleInputChange} />
+                <button onClick={handleSearch}>Search</button>
+            </div>
             <MovieList movies={movies} />
         </div>
     );

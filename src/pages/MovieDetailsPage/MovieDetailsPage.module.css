@@ -1,0 +1,73 @@
+/* src/pages/MovieDetailsPage/MovieDetailsPage.module.css */
+.container {
+    padding: 20px;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.movieDetails {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.poster {
+    max-width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info {
+    flex: 1;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    color: #b7abab;
+}
+
+.text {
+    font-size: 1rem;
+    color: #666;
+}
+
+.goBack {
+    display: inline-block;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding: 5px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.goBack:hover {
+    background-color: #0056b3;
+}
+
+.additionalInfo {
+    margin-top: 20px;
+}
+
+.additionalLink {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #28a745;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.additionalLink:hover {
+    background-color: #218838;
+}
