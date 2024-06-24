@@ -1,26 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import MovieList from '../../components/MovieList/MovieList';
 import styles from './MoviesPage.module.css';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const MoviesPage = () => {
     const [query, setQuery] = useState('');
     const [movies, setMovies] = useState([]);
+    const location = useLocation();
+    const history = useHistory();
+
+    useEffect(() => {
+        const fetchMovies = async () => {
+            try {
+                const response = await axios.get(
+                    `https://api.themoviedb.org/3/search/movie`,
+                    {
+                        params: {
+                            api_key: 'd5ab42a1e6960b57798cc274607870ae', 
+                            query: query,
+                        },
+                    }
+                );
+                setMovies(response.data.results);
+            } catch (error) {
+                console.error('Error fetching movies:', error);
+            }
+        };
+
+        if (query !== '') {
+            fetchMovies();
+        } else {
+            setMovies([]);
+        }
+    }, [query]);
 
     const handleInputChange = (e) => {
         setQuery(e.target.value);
     };
 
-    const handleSearch = async () => {
-        const response = await axios.get(
-            `https://api.themoviedb.org/3/search/movie?query=${query}`,
-            {
-                headers: {
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNWFiNDJhMWU2OTYwYjU3Nzk4Y2MyNzQ2MDc4NzBhZSIsIm5iZiI6MTcxOTIzMjYxMS41MTMyMTYsInN1YiI6IjY2Nzk1NTBlOTdkMDQ3YWNlNTNiM2Q4YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4FcuTbWlX50OpF_1lUuNLgA4otbdKEcUFMYapbb3jNI',
-                },
-            }
-        );
-        setMovies(response.data.results);
+    const handleSearch = () => {
+        // Переход до нової URL з параметром query
+        history.push(`/movies?query=${query}`);
     };
 
     return (
