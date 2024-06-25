@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import styles from './MovieDetailsPage.module.css';
+
+const defaultImg = 'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
 
 const MovieDetailsPage = () => {
     const { movieId } = useParams();
     const [movie, setMovie] = useState(null);
-    const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
+        if (!movieId) return;
+
         const fetchMovieDetails = async () => {
             try {
                 const response = await axios.get(
@@ -33,17 +36,15 @@ const MovieDetailsPage = () => {
         return <div>Loading...</div>;
     }
 
-    const handleGoBack = () => {
-        navigate(location?.state?.from ?? '/movies');
-    };
-
     const posterUrl = movie.poster_path 
         ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-        : 'URL_TO_PLACEHOLDER_IMAGE';
+        : defaultImg;
 
     return (
         <div className={styles.container}>
-            <button className={styles.goBack} onClick={handleGoBack}>Go back</button>
+            <Link to={location?.state?.from ?? '/movies'} className={styles.goBack}>
+                Go back
+            </Link>
             <div className={styles.movieDetails}>
                 <img src={posterUrl} alt={movie.title} className={styles.poster} />
                 <div className={styles.info}>
@@ -58,8 +59,8 @@ const MovieDetailsPage = () => {
             </div>
             <div className={styles.additionalInfo}>
                 <h2 className={styles.subtitle}>Additional Information</h2>
-                <Link to="cast" className={styles.additionalLink} state={{ from: location }}>Cast</Link>
-                <Link to="reviews" className={styles.additionalLink} state={{ from: location }}>Reviews</Link>
+                <Link to="cast" className={styles.additionalLink} state={{ from: location.state?.from ?? '/movies' }}>Cast</Link>
+                <Link to="reviews" className={styles.additionalLink} state={{ from: location.state?.from ?? '/movies' }}>Reviews</Link>
             </div>
             <Outlet />
         </div>

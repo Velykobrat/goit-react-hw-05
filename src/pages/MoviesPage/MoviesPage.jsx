@@ -11,29 +11,32 @@ const MoviesPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchMovies = async () => {
-            try {
-                const response = await axios.get(
-                    `https://api.themoviedb.org/3/search/movie`,
-                    {
-                        params: {
-                            api_key: 'd5ab42a1e6960b57798cc274607870ae', 
-                            query: query,
-                        },
-                    }
-                );
-                setMovies(response.data.results);
-            } catch (error) {
-                console.error('Error fetching movies:', error);
-            }
-        };
+        const searchParams = new URLSearchParams(location.search);
+        const queryParam = searchParams.get('query') || '';
+        setQuery(queryParam);
 
-        if (query !== '') {
+        if (queryParam) {
+            const fetchMovies = async () => {
+                try {
+                    const response = await axios.get(
+                        `https://api.themoviedb.org/3/search/movie`,
+                        {
+                            params: {
+                                api_key: 'd5ab42a1e6960b57798cc274607870ae', 
+                                query: queryParam,
+                            },
+                        }
+                    );
+                    setMovies(response.data.results);
+                } catch (error) {
+                    console.error('Error fetching movies:', error);
+                }
+            };
             fetchMovies();
         } else {
             setMovies([]);
         }
-    }, [query]);
+    }, [location.search]);
 
     const handleInputChange = (e) => {
         setQuery(e.target.value);
