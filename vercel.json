@@ -1,19 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "src/index.js", 
-      "use": "@vercel/node" 
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/movie/:movieId", 
-      "dest": "/src/pages/api/movie/[movieId].js" 
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/src/index.html" 
-    }
+  "rewrites":  [
+    {"source": "/(.*)", "destination": "/"}
   ]
 }
