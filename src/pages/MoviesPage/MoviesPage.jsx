@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import MovieList from '../../components/MovieList/MovieList';
 import styles from './MoviesPage.module.css';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const MoviesPage = () => {
     const [query, setQuery] = useState('');
     const [movies, setMovies] = useState([]);
     const location = useLocation();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -40,8 +40,7 @@ const MoviesPage = () => {
     };
 
     const handleSearch = () => {
-        // Переход до нової URL з параметром query
-        history.push(`/movies?query=${query}`);
+        navigate(`/movies?query=${query}`);
     };
 
     return (

@@ -37,7 +37,9 @@ const MovieDetailsPage = () => {
         navigate(location?.state?.from ?? '/movies');
     };
 
-    const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    const posterUrl = movie.poster_path 
+        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+        : 'URL_TO_PLACEHOLDER_IMAGE';
 
     return (
         <div className={styles.container}>
