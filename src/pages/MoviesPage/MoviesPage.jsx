@@ -2,17 +2,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import MovieList from '../../components/MovieList/MovieList';
 import styles from './MoviesPage.module.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 const MoviesPage = () => {
     const [query, setQuery] = useState('');
     const [movies, setMovies] = useState([]);
-    const location = useLocation();
-    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const queryParam = searchParams.get('query') || '';
 
     useEffect(() => {
-        const searchParams = new URLSearchParams(location.search);
-        const queryParam = searchParams.get('query') || '';
         setQuery(queryParam);
 
         if (queryParam) {
@@ -36,23 +35,29 @@ const MoviesPage = () => {
         } else {
             setMovies([]);
         }
-    }, [location.search]);
+    }, [queryParam]);
 
     const handleInputChange = (e) => {
         setQuery(e.target.value);
     };
 
-    const handleSearch = () => {
-        navigate(`/movies?query=${query}`);
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setSearchParams({ query: query });
     };
 
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Search Movies</h1>
-            <div className={styles.searchBar}>
-                <input type="text" value={query} onChange={handleInputChange} />
-                <button onClick={handleSearch}>Search</button>
-            </div>
+            <form className={styles.searchBar} onSubmit={handleSearch}>
+                <input 
+                    type="text" 
+                    value={query} 
+                    onChange={handleInputChange} 
+                    className={styles.input}
+                />
+                <button type="submit" className={styles.button}>Search</button>
+            </form>
             <MovieList movies={movies} />
         </div>
     );
